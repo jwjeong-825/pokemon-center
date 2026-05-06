@@ -1,25 +1,15 @@
 from fastapi import FastAPI
-import json
-import os
+from database import (
+    create_table,
+    add_pokemon_db,
+    get_pokemon_db,
+    get_one_pokemon_db,
+    delete_pokemon_by_name_db
+)
 
 app = FastAPI()
 
-DB_FILE = "pokemon.json"
-
-# 파일이 없으면 새로 생성
-if not os.path.exists(DB_FILE):
-    with open(DB_FILE, "w") as f:
-        json.dump([], f)
-
-# 파일에서 데이터 불러오기
-with open(DB_FILE, "r") as f:
-    pokemon_db = json.load(f)
-
-
-# 저장 함수
-def save_db():
-    with open(DB_FILE, "w") as f:
-        json.dump(pokemon_db, f, indent=4)
+create_table()
 
 
 @app.get("/")
@@ -29,47 +19,35 @@ def home():
 
 @app.post("/pokemon")
 def add_pokemon(name: str, level: int):
-    pokemon = {
-        "id": len(pokemon_db) + 1,
-        "name": name,
-        "level": level
-    }
-
-    pokemon_db.append(pokemon)
-
-    # 파일 저장
-    save_db()
+    add_pokemon_db(name, level)
 
     return {
-        "message": "Pokemon added successfully",
-        "pokemon": pokemon
+        "message": "Pokemon added successfully"
     }
 
 
 @app.get("/pokemon")
 def get_pokemon():
-    return pokemon_db
+    return get_pokemon_db()
 
 
 @app.get("/pokemon/{pokemon_id}")
 def get_one_pokemon(pokemon_id: int):
-    if pokemon_id <= 0 or pokemon_id > len(pokemon_db):
+    pokemon = get_one_pokemon_db(pokemon_id)
+
+    if pokemon is None:
         return {"message": "Pokemon not found"}
 
-    return pokemon_db[pokemon_id - 1]
+    return pokemon
 
 
 @app.delete("/pokemon/name/{name}")
 def discharge_pokemon(name: str):
-    for pokemon in pokemon_db:
-        if pokemon["name"] == name:
-            pokemon_db.remove(pokemon)
+    deleted_count = delete_pokemon_by_name_db(name)
 
-            # 파일 저장
-            save_db()
+    if deleted_count == 0:
+        return {"error": "해당 포켓몬을 찾을 수 없습니다."}
 
-            return {
-                "message": f"{name} 퇴원 완료! 트레이너에게 돌아갔습니다."
-            }
-
-    return {"error": "해당 포켓몬을 찾을 수 없습니다."}
+    return {
+        "message": f"{name} 퇴원 완료! 트레이너에게 돌아갔습니다."
+    }
