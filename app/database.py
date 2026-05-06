@@ -83,3 +83,4 @@ def delete_pokemon_by_name_db(name):
     conn.close()
 
     return deleted_count
+

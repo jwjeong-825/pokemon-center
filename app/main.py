@@ -51,3 +51,14 @@ def discharge_pokemon(name: str):
     return {
         "message": f"{name} 퇴원 완료! 트레이너에게 돌아갔습니다."
     }
+
+@app.post("/nurse/heal")
+def nurse_heal(name: str, level: int):
+    return {
+        "message": f"간호사 누나가 {name}을 치료했습니다! 포켓몬을 다시 돌려드립니다.",
+        "pokemon": {
+            "name": name,
+            "level": level,
+            "condition": "healthy"
+        }
+    }
