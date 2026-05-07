@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from database import create_table
-from computer import router as computer_router
-from nurse import router as nurse_router
+from app.database import create_table
+from app.computer import router as computer_router
+from app.nurse import router as nurse_router
 
 app = FastAPI()
 

@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from database import (
+from app.database import (
     add_pokemon_db,
     get_pokemon_db,
     get_one_pokemon_db,
