@@ -6,4 +6,29 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
+    environment:
+      DB_HOST: db
+      DB_NAME: pokemon_center
+      DB_USER: pokemon_user
+      DB_PASSWORD: pokemon_password
+    depends_on:
+      db:
+        condition: service_healthy
 
+  db:
+    image: postgres:16
+    container_name: pokemon-center-db
+    environment:
+      POSTGRES_DB: pokemon_center
+      POSTGRES_USER: pokemon_user
+      POSTGRES_PASSWORD: pokemon_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pokemon_user -d pokemon_center"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
