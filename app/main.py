@@ -1,17 +1,21 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.templating import Jinja2Templates
 from app.database import create_table
 from app.computer import router as computer_router
 from app.nurse import router as nurse_router
 
 app = FastAPI()
+templates = Jinja2Templates(directory="app/templates")
 
 create_table()
 
 
 @app.get("/")
-def home():
-    return {"message": "Welcome to Juwon's Pokemon Center"}
-
+def home(request: Request):
+    return templates.TemplateResponse(
+        "index.html",
+        {"request": request}
+    )
 
 # 컴퓨터 기능 연결
 app.include_router(computer_router)

@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from app.schemas import PokemonCreate
 from app.database import (
     add_pokemon_db,
     get_pokemon_db,
@@ -16,10 +17,9 @@ router = APIRouter(
     summary="포켓몬 맡기기",
     description="트레이너의 포켓몬을 PC에 저장합니다."
 )
-def add_pokemon(name: str, level: int):
+def add_pokemon(pokemon: PokemonCreate):
 
-    add_pokemon_db(name, level)
-
+    add_pokemon_db(pokemon.name, pokemon.level)
     return {
         "message": "Pokemon added successfully"
     }
