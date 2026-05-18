@@ -1,28 +1,42 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <title>주원이의 포켓몬센터</title>
+
+    <link rel="stylesheet" href="/static/style.css">
 </head>
+
 <body>
-    <h1>주원이의 포켓몬센터</h1>
-<input type="text" id="name" placeholder="포켓몬 이름">
 
-<input type="number" id="level" placeholder="레벨">
+    <div class="container">
 
-<button onclick="addPokemon()">
-    포켓몬 맡기기
-</button>
-    <button onclick="loadPokemon()">
-        포켓몬 목록 보기
-    </button>
+        <h1>주원이의 포켓몬센터</h1>
 
-    <ul id="pokemon-list"></ul>
+        <input type="text" id="name" placeholder="포켓몬 이름">
+
+        <input type="number" id="level" placeholder="레벨">
+
+        <br>
+
+        <button onclick="addPokemon()">
+            포켓몬 맡기기
+        </button>
+
+        <button onclick="loadPokemon()">
+            포켓몬 목록 보기
+        </button>
+
+        <ul id="pokemon-list"></ul>
+
+    </div>
 
     <script>
+
         async function loadPokemon() {
 
-	    const response = await fetch("/computer");
+            const response = await fetch("/computer");
 
             const data = await response.json();
 
@@ -39,29 +53,31 @@
                 `;
             }
         }
-async function addPokemon() {
 
-    alert("포켓몬 맡기기 버튼 눌림");
+        async function addPokemon() {
 
-    const name = document.getElementById("name").value;
-    const level = document.getElementById("level").value;
+            const name = document.getElementById("name").value;
 
-    const response = await fetch("/computer/deposit", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            name: name,
-            level: Number(level)
-        })
-    });
+            const level = document.getElementById("level").value;
 
-    const result = await response.json();
-    console.log(result);
+            await fetch("/computer/deposit", {
 
-    loadPokemon();
-}    </script>
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    name: name,
+                    level: Number(level)
+                })
+            });
+
+            loadPokemon();
+        }
+
+    </script>
+
 </body>
-
 </html>

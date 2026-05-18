@@ -1,13 +1,24 @@
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
+
 from app.database import create_table
 from app.computer import router as computer_router
-from app.nurse import router as nurse_router
+
 
 app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
+
 templates = Jinja2Templates(directory="app/templates")
 
 create_table()
+
+app.include_router(
+    computer_router,
+    prefix="/computer",
+    tags=["Pokemon Computer"]
+)
 
 
 @app.get("/")
@@ -16,9 +27,3 @@ def home(request: Request):
         "index.html",
         {"request": request}
     )
-
-# 컴퓨터 기능 연결
-app.include_router(computer_router)
-
-# 간호사 기능 연결
-app.include_router(nurse_router)
