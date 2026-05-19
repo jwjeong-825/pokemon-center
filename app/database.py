@@ -42,7 +42,7 @@ def get_pokemon_db():
     conn = get_connection()
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM pokemon")
+    cursor.execute("SELECT id, name, level FROM pokemon")
     rows = cursor.fetchall()
 
     conn.close()
@@ -54,7 +54,7 @@ def get_one_pokemon_db(pokemon_id):
     cursor = conn.cursor()
 
     cursor.execute(
-        "SELECT * FROM pokemon WHERE id = ?",
+        "SELECT id, name, level FROM pokemon WHERE id = ?",
         (pokemon_id,)
     )
 

@@ -1,4 +1,5 @@
 body {
+    margin: 0;
     font-family: Arial, sans-serif;
     background-color: #f5f7fb;
     text-align: center;
@@ -6,16 +7,35 @@ body {
 }
 
 .container {
-    background-color: white;
-    width: 420px;
+    background-color: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(4px);
+    width: 520px;
     margin: 0 auto;
     padding: 30px;
-    border-radius: 16px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    border-radius: 18px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
 }
 
 h1 {
     color: #e63946;
+}
+
+.section {
+    margin-top: 24px;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.25);
+}
+
+.pc-section {
+    background-color: #eef6ff;
+    border: 3px solid #457b9d;
+}
+
+.nurse-section {
+    background-color: #fff0f0;
+    border: 3px solid #e63946;
+    box-shadow: 0 0 15px rgba(0,0,0,0.25);
 }
 
 input {
@@ -31,7 +51,7 @@ button {
     margin: 8px;
     border: none;
     border-radius: 8px;
-    background-color: #457b9d;
+    background: linear-gradient(to bottom, #ff4d4d, #cc0000);
     color: white;
     cursor: pointer;
 }
@@ -40,14 +60,29 @@ button:hover {
     background-color: #1d3557;
 }
 
+.nurse-section button {
+    background-color: #e63946;
+}
+
+.nurse-section button:hover {
+    background-color: #b92335;
+}
+
 ul {
     list-style: none;
     padding: 0;
 }
 
 li {
-    background-color: #f1faee;
+    background-color: white;
     margin: 8px;
     padding: 10px;
     border-radius: 8px;
+}
+body {
+    background-image: url("/static/pokemon-center-ui.png");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: contain;
+    background-attachment: fixed;
 }

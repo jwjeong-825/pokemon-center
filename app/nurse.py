@@ -1,16 +1,13 @@
 from fastapi import APIRouter
 
-router = APIRouter()
+router = APIRouter(
+    tags=["Nurse"]
+)
 
 
-@router.post("/nurse/heal")
-def nurse_heal(name: str, level: int):
+@router.post("/heal")
+def heal_pokemon():
 
     return {
-        "message": f"간호사 누나가 {name}을 치료했습니다! 포켓몬을 다시 돌려드립니다.",
-        "pokemon": {
-            "name": name,
-            "level": level,
-            "condition": "healthy"
-        }
+        "message": "포켓몬이 모두 완전히 회복되었습니다!"
     }
