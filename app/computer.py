@@ -6,6 +6,7 @@ from app.database import (
     add_pokemon_db,
     get_pokemon_db,
     get_one_pokemon_db,
+    delete_pokemon_by_id_db,
     delete_pokemon_by_name_db
 )
 
@@ -54,17 +55,17 @@ def get_one_pokemon(pokemon_id: int):
 
 
 @router.delete(
-    "/discharge/{name}",
-    summary="포켓몬 찾기",
-    description="PC에서 포켓몬을 꺼내 트레이너에게 돌려줍니다."
+    "/discharge/id/{pokemon_id}",
+    summary="포켓몬 데리고 가기",
+    description="PC에 맡긴 포켓몬을 ID로 다시 데리고 갑니다."
 )
-def discharge_pokemon(name: str):
+def discharge_pokemon_by_id(pokemon_id: int):
 
-    deleted_count = delete_pokemon_by_name_db(name)
+    deleted_count = delete_pokemon_by_id_db(pokemon_id)
 
     if deleted_count == 0:
         return {"error": "해당 포켓몬을 찾을 수 없습니다."}
 
     return {
-        "message": f"{name} 퇴원 완료! 트레이너에게 돌아갔습니다."
+        "message": f"포켓몬을 PC에서 데리고 갔습니다!"
     }

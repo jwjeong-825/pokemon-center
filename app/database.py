@@ -81,3 +81,17 @@ def delete_pokemon_by_name_db(name):
     conn.close()
 
     return deleted_count
+def delete_pokemon_by_id_db(pokemon_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "DELETE FROM pokemon WHERE id = ?",
+        (pokemon_id,)
+    )
+
+    conn.commit()
+    deleted_count = cursor.rowcount
+    conn.close()
+
+    return deleted_count

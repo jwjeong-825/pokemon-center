@@ -1,88 +1,164 @@
+html,
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f5f7fb;
-    text-align: center;
-    padding: 40px;
-}
-
-.container {
-    background-color: rgba(255, 255, 255, 0.82);
-    backdrop-filter: blur(4px);
-    width: 520px;
-    margin: 0 auto;
-    padding: 30px;
-    border-radius: 18px;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
-}
-
-h1 {
-    color: #e63946;
-}
-
-.section {
-    margin-top: 24px;
-    padding: 20px;
-    border-radius: 14px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.25);
-}
-
-.pc-section {
-    background-color: #eef6ff;
-    border: 3px solid #457b9d;
-}
-
-.nurse-section {
-    background-color: #fff0f0;
-    border: 3px solid #e63946;
-    box-shadow: 0 0 15px rgba(0,0,0,0.25);
-}
-
-input {
-    width: 80%;
-    padding: 10px;
-    margin: 8px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-}
-
-button {
-    padding: 10px 16px;
-    margin: 8px;
-    border: none;
-    border-radius: 8px;
-    background: linear-gradient(to bottom, #ff4d4d, #cc0000);
-    color: white;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #1d3557;
-}
-
-.nurse-section button {
-    background-color: #e63946;
-}
-
-.nurse-section button:hover {
-    background-color: #b92335;
-}
-
-ul {
-    list-style: none;
     padding: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: #111;
+
+    font-family: Arial, sans-serif;
+
+    overflow: hidden;
 }
 
-li {
-    background-color: white;
-    margin: 8px;
-    padding: 10px;
-    border-radius: 8px;
+.game-wrapper {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
 }
-body {
+
+.game-frame {
+    position: relative;
+
+    width: 90vw;
+    height: 90vh;
+
     background-image: url("/static/pokemon-center-ui.png");
     background-repeat: no-repeat;
-    background-position: center top;
-    background-size: contain;
-    background-attachment: fixed;
+    background-position: center;
+    background-size: 100% 100%;
+
+    overflow: hidden;
+}
+/* 공통 패널 */
+.pc-panel,
+.heal-panel,
+.pokemon-panel {
+    position: absolute;
+
+    background: rgba(255, 255, 255, 0.92);
+
+    border-radius: 16px;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+
+    padding: 18px;
+
+    text-align: center;
+}
+
+/* 오른쪽 PC 패널 */
+.pc-panel {
+    top: 23%;
+    right: 7%;
+
+    width: 13%;
+    min-width: 190px;
+}
+
+/* 가운데 치료 패널 */
+.heal-panel {
+    top: 55%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 18%;
+    min-width: 260px;
+}
+
+/* 왼쪽 아래 목록 */
+.pokemon-panel {
+    left: 4%;
+    bottom: 7%;
+
+    width: 18%;
+    min-width: 280px;
+
+    max-height: 22%;
+    overflow-y: auto;
+}
+
+h2,
+h3 {
+    margin-top: 0;
+}
+
+/* 버튼 공통 */
+.game-frame button {
+    width: 100%;
+
+    margin-top: 12px;
+
+    padding: 14px;
+
+    border: none;
+    border-radius: 14px;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    color: white;
+
+    cursor: pointer;
+
+    background: linear-gradient(to bottom, #58a6ff, #1565c0);
+
+    box-shadow:
+        inset 0 3px 0 rgba(255, 255, 255, 0.4),
+        0 5px 0 #0b3f85;
+}
+
+.game-frame button:hover {
+    transform: translateY(2px);
+
+    box-shadow:
+        inset 0 2px 0 rgba(255, 255, 255, 0.35),
+        0 2px 0 #0b3f85;
+}
+
+/* 치료 버튼 */
+.heal-panel button {
+    background: linear-gradient(to bottom, #ff8b8b, #d62828);
+
+    box-shadow:
+        inset 0 3px 0 rgba(255, 255, 255, 0.4),
+        0 5px 0 #8f1d1d;
+}
+
+/* 목록 */
+#pokemon-list {
+    list-style: none;
+
+    padding: 0;
+    margin: 0;
+}
+
+#pokemon-list li {
+    background: white;
+
+    margin: 8px 0;
+    padding: 10px;
+
+    border-radius: 10px;
+}
+
+/* 목록 안 데리고 가기 버튼 */
+#pokemon-list button {
+    width: auto;
+
+    padding: 6px 10px;
+
+    margin-left: 8px;
+
+    font-size: 13px;
+
+    background: linear-gradient(to bottom, #ff6b6b, #d62828);
 }
