@@ -30,7 +30,8 @@ app.include_router(
 
 @app.get("/")
 def home(request: Request):
+
     return templates.TemplateResponse(
-        "index.html",
-        {"request": request}
+        request=request,
+        name="index.html"
     )
