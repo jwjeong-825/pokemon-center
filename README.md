@@ -14,6 +14,9 @@ FastAPI와 SQLite를 이용해 만든 포켓몬센터 웹 프로젝트입니다.
 - Python
 - FastAPI
 - SQLite
+- Docker
+- Docker Compose
+- AWS EC2
 - HTML / CSS / JavaScript
 - Git / GitHub
 
@@ -55,6 +58,21 @@ http://127.0.0.1:8000
 
 ---
 
+## 시스템 구조
+
+```text
+User
+ ↓
+AWS EC2
+ ↓
+Docker Compose
+ ↓
+FastAPI
+ ↓
+SQLite
+```
+---
+
 ## 프로젝트 구조
 
 ```text
@@ -85,11 +103,13 @@ pokemon-center
 ```text
 http://13.211.170.19:8000
 ```
+
 ## 배운 점
 
-- FastAPI 라우터 구조 이해
-- SQLite 데이터 저장 및 삭제
-- JavaScript fetch API 사용
-- HTML/CSS 기반 UI 구성
-- GitHub 프로젝트 관리 경험
-- 게임 UI 스타일 웹페이지 구현 경험
+- FastAPI 기반 API 서버 구현
+- SQLite를 이용한 데이터 저장 및 삭제
+- JavaScript fetch API를 통한 비동기 통신
+- Docker 기반 컨테이너 실행 경험
+- Docker Compose를 이용한 서비스 실행 관리
+- AWS EC2 환경 배포 경험
+- GitHub를 이용한 프로젝트 관리 경험
