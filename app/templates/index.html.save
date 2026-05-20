@@ -1,0 +1,420 @@
+\<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>주원이의 포켓몬센터</title>
+
+    <link rel="stylesheet" href="/static/style.css?v=6">
+</head>
+
+<body>
+
+    <div class="game-wrapper">
+
+<div class="game-frame">
+
+    <!-- PC 패널 -->
+
+    <div class="pc-panel">
+
+        <h2>포켓몬 PC</h2>
+
+        <button onclick="addPokemon()">
+            PC 맡기기
+        </button>
+
+        <button onclick="loadPokemon()">
+            목록 보기
+        </button>
+
+    </div>
+
+    <!-- 간호 패널 -->
+
+    <div class="heal-panel">
+
+        <h2>간호사 치유실</h2>
+
+        <button onclick="healPokemon()">
+            포켓몬 치료
+        </button>
+
+    </div>
+
+    <!-- 포켓몬 목록 -->
+
+    <div class="pokemon-panel">
+
+        <ul id="pokemon-list"></ul>
+
+    </div>
+
+	</div>
+    </div>
+    <!-- 기존 기능 UI -->
+
+
+        <!-- 간호사 -->
+
+        <div class="section nurse-section">
+
+            <h2>간호사 치유실</h2>
+
+            <p>
+                간호사가 포켓몬을 치료해줍니다.
+            </p>
+
+            <button onclick="healPokemon()">
+                포켓몬 치료하기
+            </button>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        async function loadPokemon() {
+
+            const response = await fetch("/computer");
+
+            const data = await response.json();
+
+            const list = document.getElementById("pokemon-list");
+
+            list.innerHTML = "";
+
+            for (let pokemon of data) {
+
+                list.innerHTML += `
+                    <li>
+                        ${pokemon.name} - Lv.${pokemon.level}
+
+                        <button onclick="deletePokemon('${pokemon.name}')">
+                            데리고 가기
+                        </button>
+                    </li>
+                `;
+            }
+        }
+
+        async function addPokemon() {
+
+            const name = document.getElementById("name").value;
+
+            const level = document.getElementById("level").value;
+
+            await fetch("/computer/deposit", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    name: name,
+                    level: Number(level)
+                })
+            });
+
+            loadPokemon();
+        }
+
+        async function deletePokemon(name) {
+
+            await fetch(`/computer/discharge/${name}`, {
+                method: "DELETE"
+            });
+
+            loadPokemon();
+        }
+
+        async function healPokemon() {
+
+            const response = await fetch("/nurse/heal", {
+                method: "POST"
+            });
+
+            const result = await response.json();
+
+            alert(result.message);
+        }
+
+    </script>
+/* 게임 프레임 */
+
+.game-frame {
+
+    position: relative;
+
+    width: 90vw;
+    max-width: 1500px;
+
+    aspect-ratio: 16 / 9;
+
+    background-image: url("/static/pokemon-center-ui.png");
+
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+/* 공통 패널 */
+
+.pc-panel,
+.heal-panel,
+.pokemon-panel {
+
+    position: absolute;
+
+    background: rgba(255,255,255,0.92);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,0.25);
+
+    padding: 20px;
+}
+
+/* 오른쪽 PC */
+
+.pc-panel {
+
+    top: 26%;
+    right: 3%;
+
+    width: 240px;
+}
+
+/* 가운데 치료 */
+
+.heal-panel {
+
+    bottom: 20%;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 320px;
+
+    text-align: center;
+}
+
+/* 아래 목록 */
+
+.pokemon-panel {
+
+    bottom: 3%;
+    left: 3%;
+
+    width: 340px;
+
+    max-height: 180px;
+
+    overflow-y: auto;
+}
+
+/* 버튼 */
+
+.game-frame button {
+
+    width: 100%;
+
+    margin-top: 12px;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    color: white;
+
+    cursor: pointer;
+
+    background:
+        linear-gradient(to bottom,
+        #58a6ff,
+        #1565c0);
+
+    box-shadow:
+        inset 0 3px 0 rgba(255,255,255,0.4),
+        0 5px 0 #0b3f85;
+}
+
+/* 치료 버튼 */
+
+.heal-panel button {
+
+    background:
+        linear-gradient(to bottom,
+        #ff8b8b,
+        #d62828);
+
+    box-shadow:
+        inset 0 3px 0 rgba(255,255,255,0.4),
+        0 5px 0 #8f1d1d;
+}
+
+/* 목록 */
+
+#pokemon-list {
+
+    list-style: none;
+
+    padding: 0;
+}
+
+#pokemon-list li {
+
+    background: white;
+
+    margin: 8px 0;
+
+    padding: 10px;
+
+    border-radius: 10px;
+/* 게임 프레임 */
+
+.game-frame {
+
+    position: relative;
+
+    width: 90vw;
+    max-width: 1500px;
+
+    aspect-ratio: 16 / 9;
+
+    background-image: url("/static/pokemon-center-ui.png");
+
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+/* 공통 패널 */
+
+.pc-panel,
+.heal-panel,
+.pokemon-panel {
+
+    position: absolute;
+
+    background: rgba(255,255,255,0.92);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,0.25);
+
+    padding: 20px;
+}
+
+/* 오른쪽 PC */
+
+.pc-panel {
+
+    top: 26%;
+    right: 3%;
+
+    width: 240px;
+}
+
+/* 가운데 치료 */
+
+.heal-panel {
+
+    bottom: 20%;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 320px;
+
+    text-align: center;
+}
+
+/* 아래 목록 */
+
+.pokemon-panel {
+
+    bottom: 3%;
+    left: 3%;
+
+    width: 340px;
+
+    max-height: 180px;
+
+    overflow-y: auto;
+}
+
+/* 버튼 */
+
+.game-frame button {
+
+    width: 100%;
+
+    margin-top: 12px;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    color: white;
+
+    cursor: pointer;
+
+    background:
+        linear-gradient(to bottom,
+        #58a6ff,
+        #1565c0);
+
+    box-shadow:
+        inset 0 3px 0 rgba(255,255,255,0.4),
+        0 5px 0 #0b3f85;
+}
+
+/* 치료 버튼 */
+
+.heal-panel button {
+
+    background:
+        linear-gradient(to bottom,
+        #ff8b8b,
+        #d62828);
+
+    box-shadow:
+        inset 0 3px 0 rgba(255,255,255,0.4),
+        0 5px 0 #8f1d1d;
+}
+
+/* 목록 */
+
+#pokemon-list {
+
+    list-style: none;
+
+    padding: 0;
+}
+
+#pokemon-list li {
+
+    background: white;
+
+    margin: 8px 0;
+
+    padding: 10px;
+
+    border-radius: 10px;
+}
