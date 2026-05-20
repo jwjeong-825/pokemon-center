@@ -1,5 +1,7 @@
 # 주원이의 포켓몬센터
 
+![포켓몬센터 메인 화면](screenshots/pokemon-center-main.png)
+
 FastAPI와 SQLite를 이용해 만든 포켓몬센터 웹 프로젝트입니다.
 
 포켓몬을 PC에 맡기고 조회하거나 다시 데리고 갈 수 있으며,
